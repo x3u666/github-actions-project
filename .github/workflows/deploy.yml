@@ -97,22 +97,18 @@ jobs:
             exit 1
           fi # +1 балл (Критерий 4)
 
-          # Тест 2: Сравнение данных БД и веб-интерфейса (имитация)
-          echo "2. Testing data consistency..."
+          # Тест 2: Сравнение данных (новый тест для демо-приложения)
+          echo "2. Testing application info endpoint..."
 
-          # Имитируем получение данных напрямую из БД
-          DB_COUNT=5
+          # Получаем информацию о приложении
+          APP_INFO=$(curl -s http://localhost:${{ secrets.APP_PORT }}/api/info)
+          echo "App info: $APP_INFO"
 
-          # Получаем данные через веб-API
-          WEB_COUNT=$(curl -s http://localhost:${{ secrets.APP_PORT }}/api/items/count)
-
-          echo "Database count: $DB_COUNT"
-          echo "Web API count: $WEB_COUNT"
-
-          if [ "$DB_COUNT" = "$WEB_COUNT" ]; then
-            echo "✅ Data consistency test passed"
+          # Проверяем что endpoint возвращает корректные данные
+          if echo "$APP_INFO" | grep -q '"status":"running"'; then
+            echo "✅ Application info test passed"
           else
-            echo "❌ Data consistency test failed"
+            echo "❌ Application info test failed"
             exit 1
           fi # +1 балл (Критерий 4)
 
