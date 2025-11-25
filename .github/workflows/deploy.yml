@@ -123,7 +123,7 @@ jobs:
 
           ### Test Results
           - Database records: $DB_COUNT
-          - Web API records: $WEB_COUNT
+          - Web API records: $WEB_COUNT 
           EOF
 
       - name: Save Docker logs
