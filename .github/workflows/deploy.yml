@@ -61,6 +61,17 @@ jobs:
             docker-compose logs
             exit 1
           fi # +1 балл (Критерий 2)
+      
+      - name: Register deployment
+        run: |
+          echo "📝 Registering new deployment..."
+          # Отправляем POST запрос чтобы увеличить счетчик деплоев
+          DEPLOY_RESPONSE=$(curl -s -X POST http://localhost:${{ secrets.APP_PORT }}/deploy)
+          echo "Deployment registered: $DEPLOY_RESPONSE"
+          
+          # Проверяем что счетчик обновился
+          APP_INFO=$(curl -s http://localhost:${{ secrets.APP_PORT }}/api/info)
+          echo "Current app info: $APP_INFO"
 
       - name: Run application tests
         run: |
