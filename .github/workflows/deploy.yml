@@ -10,7 +10,7 @@ env:
 
 jobs:
   deploy-and-test:
-    runs-on: self-hosted # +1 балл (Критерий 1)
+    runs-on: self-hosted 
 
     steps:
       - name: Checkout code
@@ -19,7 +19,6 @@ jobs:
       - name: Create .env file from secrets
         run: |
           echo "Creating .env file from GitHub Secrets..."
-          # Создаем .env файл, подставляя значения из секретов
           cat << EOF > .env
           # Database configuration
           DB_HOST=${{ secrets.DB_HOST }}
@@ -60,7 +59,7 @@ jobs:
             echo "❌ Some containers failed to start"
             docker-compose logs
             exit 1
-          fi # +1 балл (Критерий 2)
+          fi 
       
       - name: Register deployment
         run: |
@@ -95,7 +94,7 @@ jobs:
           else
             echo "❌ Application database connection failed"
             exit 1
-          fi # +1 балл (Критерий 4)
+          fi 
 
           # Тест 2: Сравнение данных (новый тест для демо-приложения)
           echo "2. Testing application info endpoint..."
@@ -110,7 +109,7 @@ jobs:
           else
             echo "❌ Application info test failed"
             exit 1
-          fi # +1 балл (Критерий 4)
+          fi 
 
       - name: Create test report
         run: |
@@ -151,7 +150,7 @@ jobs:
             deployment-logs.txt
             docker-images.txt
             docker-ps.txt
-          retention-days: 30 # +1 балл (Критерий 3)
+          retention-days: 30 
 
       - name: Final summary
         run: |

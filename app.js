@@ -7,7 +7,6 @@ let lastDeployTime = new Date().toLocaleString();
 
 app.use(express.json());
 
-// Главная страница - покажет информацию о деплое
 app.get('/', (req, res) => {
   const html = `
     <!DOCTYPE html>
@@ -18,7 +17,7 @@ app.get('/', (req, res) => {
             body { font-family: Arial, sans-serif; margin: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
             .container { max-width: 800px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px; }
             .deploy-info { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; margin: 20px 0; }
-            .success { color: #4CAF50; font-weight: bold; }
+            .success { color: #ff00f2ff; font-weight: bold; }
             .version { font-size: 24px; margin-bottom: 10px; }
         </style>
     </head>
@@ -60,7 +59,6 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-// Health check для workflow
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'healthy', 
@@ -69,7 +67,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API для увеличения счетчика деплоев (будем вызывать из workflow)
 app.post('/deploy', (req, res) => {
   deploymentCount++;
   lastDeployTime = new Date().toLocaleString();
@@ -80,7 +77,6 @@ app.post('/deploy', (req, res) => {
   });
 });
 
-// Новый маршрут для отображения данных
 app.get('/api/info', (req, res) => {
   res.json({
     version: `1.0.${deploymentCount}`,
